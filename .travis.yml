@@ -26,6 +26,11 @@ matrix:
       gemfile: Gemfile.rails40
     - rvm: 2.4.0
       gemfile: Gemfile.rails41
+  include:
+    - rvm: 2.4.0
+      gemfile: Gemfile.rails51
+  allow_failures:
+    - gemfile: Gemfile.rails51
 
 notifications:
   email:
