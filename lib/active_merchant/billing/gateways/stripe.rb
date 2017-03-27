@@ -371,6 +371,7 @@ module ActiveMerchant #:nodoc:
         end
 
         add_metadata(post, options)
+        add_shipping_info(post, options)
         add_application_fee(post, options)
         add_exchange_rate(post, options)
         add_destination(post, options)
@@ -544,7 +545,6 @@ module ActiveMerchant #:nodoc:
         post[:owner] = {}
         post[:owner][:name] = creditcard.name if creditcard.name
         post[:owner][:email] = options[:email] if options[:email]
-
         if address = options[:billing_address] || options[:address]
           owner_address = {}
           owner_address[:line1] = address[:address1] if address[:address1]
@@ -557,6 +557,28 @@ module ActiveMerchant #:nodoc:
           post[:owner][:phone] = address[:phone] if address[:phone]
           post[:owner][:address] = owner_address
         end
+      end
+      
+      def add_shipping_info(post, options = {})
+        post[:shipping] = {}
+
+        if address = options[:shipping_address]
+          address_params = {}
+          address_params[:line1] = address[:address1] if address[:address1]
+          address_params[:line2] = address[:address2] if address[:address2]
+          address_params[:city] = address[:city] if address[:city]
+          address_params[:state] = address[:state] if address[:state]
+          address_params[:postal_code] = address[:zip] if address[:zip]
+          address_params[:country] = address[:country] if address[:country]
+          post[:shipping][:address] = address_params unless address_params.empty?
+          post[:shipping][:name] = address[:name] if address[:name]
+          post[:shipping][:phone] = address[:phone] if address[:phone]
+        end
+
+        post[:shipping][:carrier] = options[:carrier] if options[:carrier]
+        post[:shipping][:tracking_number] = options[:tracking_number] if options[:tracking_number]
+
+        post.delete(:shipping) if post[:shipping].empty?
       end
 
       def parse(body)
