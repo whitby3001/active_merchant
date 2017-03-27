@@ -543,7 +543,7 @@ class StripeTest < Test::Unit::TestCase
 
   def test_successful_void_with_reason
     @gateway.expects(:ssl_request).with do |_, _, post, _|
-      post.include?("reason=fraudulent")
+      post.include?('reason=fraudulent')
     end.returns(successful_purchase_response(true))
 
     assert response = @gateway.void('ch_test_charge', {reason: 'fraudulent'})
@@ -996,7 +996,6 @@ class StripeTest < Test::Unit::TestCase
     assert_equal @options[:billing_address][:city], post[:card][:address_city]
   end
 
-<<<<<<< HEAD
   def test_add_shipping_info
     post = {:card => {}}
     @gateway.send(:add_shipping_info, post, @options)
@@ -1010,7 +1009,8 @@ class StripeTest < Test::Unit::TestCase
     assert_equal @options[:shipping_address][:phone], post[:shipping][:phone]
     assert_equal @options[:carrier], post[:shipping][:carrier]
     assert_equal @options[:tracking_number], post[:shipping][:tracking_number]
-=======
+  end
+
   def test_add_statement_address
     post = {}
 
@@ -1035,7 +1035,6 @@ class StripeTest < Test::Unit::TestCase
 
       assert_equal nil, post[:statement_address]
     end
->>>>>>> ddd7abdff569ada2212f1dce2ae4dc15080e07ff
   end
 
   def test_ensure_does_not_respond_to_credit
