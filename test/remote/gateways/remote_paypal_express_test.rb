@@ -53,4 +53,14 @@ class PaypalExpressTest < Test::Unit::TestCase
     assert response.test?
     assert_not_nil response,token
   end
+  
+  def test_transcript_scrubbing
+    transcript = capture_transcript(@gateway) do
+      @gateway.setup_authorization(500, @options)
+    end
+    transcript = @gateway.scrub(transcript)
+
+    assert_scrubbed(@gateway.options[:login], transcript)
+    assert_scrubbed(@gateway.options[:password], transcript)
+  end
 end
