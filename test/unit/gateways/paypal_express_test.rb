@@ -410,7 +410,6 @@ class PaypalExpressTest < Test::Unit::TestCase
                                             {:name => 'item two', :description => 'item two description', :amount => 20000, :number => 2, :quantity => 4}
     ]}))
 
-
     assert_equal 'item one', REXML::XPath.first(xml, '//n2:PaymentDetails/n2:PaymentDetailsItem/n2:Name').text
     assert_equal 'item one description', REXML::XPath.first(xml, '//n2:PaymentDetails/n2:PaymentDetailsItem/n2:Description').text
     assert_equal '100.00', REXML::XPath.first(xml, '//n2:PaymentDetails/n2:PaymentDetailsItem/n2:Amount').text
@@ -482,7 +481,6 @@ class PaypalExpressTest < Test::Unit::TestCase
     assert_equal 'Billing Agreement Id or transaction Id is not valid', response.message
     assert_equal '11451', response.params['error_codes']
   end
-
 
   def test_build_reference_transaction_test
     PaypalExpressGateway.application_id = 'ActiveMerchant_FOO'
@@ -702,7 +700,6 @@ class PaypalExpressTest < Test::Unit::TestCase
     RESPONSE
   end
 
-
   def successful_authorize_reference_transaction_response
   <<-RESPONSE
 <?xml version="1.0" encoding="UTF-8"?>
@@ -798,7 +795,6 @@ class PaypalExpressTest < Test::Unit::TestCase
 	</SOAP-ENV:Envelope>
     RESPONSE
   end
-
 
   def successful_details_response
     <<-RESPONSE
