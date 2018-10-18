@@ -658,7 +658,7 @@ class PaypalExpressTest < Test::Unit::TestCase
       :cancel_return_url => 'http://example.com'
     )
 
-    assert_equal '10736' , response.params['error_codes']
+    assert_equal '10736', response.params['error_codes']
   end
 
   def test_error_codes_for_multiple_errors
@@ -668,7 +668,7 @@ class PaypalExpressTest < Test::Unit::TestCase
       :cancel_return_url => 'http://example.com'
     )
 
-    assert_equal ['10736', '10002'] , response.params['error_codes'].split(',')
+    assert_equal ['10736', '10002'], response.params['error_codes'].split(',')
   end
 
   def test_allow_guest_checkout
