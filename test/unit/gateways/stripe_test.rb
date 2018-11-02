@@ -1216,7 +1216,7 @@ class StripeTest < Test::Unit::TestCase
       post.include?('expand[0]=balance_transaction')
     end.returns(successful_authorization_response)
 
-    @options.merge!(:expand => :balance_transaction)
+    @options[:expand] = :balance_transaction
 
     @gateway.authorize(@amount, @credit_card, @options)
   end
@@ -1226,7 +1226,7 @@ class StripeTest < Test::Unit::TestCase
       post.include?('expand[0]=balance_transaction&expand[1]=customer')
     end.returns(successful_authorization_response)
 
-    @options.merge!(:expand => [:balance_transaction, :customer])
+    @options[:expand] = [:balance_transaction, :customer]
 
     @gateway.authorize(@amount, @credit_card, @options)
   end
@@ -1244,7 +1244,7 @@ class StripeTest < Test::Unit::TestCase
       post.include?('recurring=true')
     end.returns(successful_authorization_response)
 
-    @options.merge!(eci: 'recurring')
+    @options[:eci] = 'recurring'
 
     @gateway.authorize(@amount, @credit_card, @options)
   end
@@ -1254,7 +1254,7 @@ class StripeTest < Test::Unit::TestCase
       !post.include?('recurring')
     end.returns(successful_authorization_response)
 
-    @options.merge!(eci: 'installment')
+    @options[:eci] = 'installment'
 
     @gateway.authorize(@amount, @credit_card, @options)
   end
@@ -1264,7 +1264,7 @@ class StripeTest < Test::Unit::TestCase
       post.include?('recurring=true')
     end.returns(successful_authorization_response)
 
-    @options.merge!(recurring: true)
+    @options[:recurring] = true
 
     @gateway.authorize(@amount, @credit_card, @options)
   end
@@ -1274,7 +1274,7 @@ class StripeTest < Test::Unit::TestCase
       !post.include?('recurring')
     end.returns(successful_authorization_response)
 
-    @options.merge!(recurring: false)
+    @options[:recurring] = false
 
     @gateway.authorize(@amount, @credit_card, @options)
   end
@@ -1419,7 +1419,7 @@ class StripeTest < Test::Unit::TestCase
       headers.include?('Stripe-Account')
     end.returns(successful_authorization_response)
 
-    @options.merge!(stripe_account: fixtures(:stripe_destination)[:stripe_user_id])
+    @options[:stripe_account] = fixtures(:stripe_destination)[:stripe_user_id]
 
     @gateway.purchase(@amount, @credit_card, @options)
   end
